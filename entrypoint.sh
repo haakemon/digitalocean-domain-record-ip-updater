@@ -11,6 +11,7 @@ BASH_ENV=/container.env
 
 crontab domain_record_cron
 service cron start
+
 trap "service cron stop; exit" SIGINT SIGTERM
 
 tail -f /var/log/cron.log

@@ -10,4 +10,5 @@ COPY . .
 RUN yarn --immutable
 RUN yarn build
 
-ENTRYPOINT [ "./entrypoint.sh" ]
+RUN ["chmod", "+x", "/app/entrypoint.sh"]
+ENTRYPOINT [ "bash", "/app/entrypoint.sh" ]
