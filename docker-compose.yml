@@ -1,0 +1,20 @@
+version: "3.9"
+
+secrets:
+  digitalocean_read_write_token:
+    file: ./docker-secrets/digitalocean_read_write_token
+
+
+services:
+  digitalocean_update_ip:
+    container_name: digitalocean_update_ip
+    secrets:
+      - digitalocean_read_write_token
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - TZ=Europe/Oslo
+      - AUTH_TOKEN_FILE=/run/secrets/digitalocean_read_write_token
+      - DOMAIN=example.com
+      - RECORD_IDS="123456,987654"
