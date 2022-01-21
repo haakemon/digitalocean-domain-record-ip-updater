@@ -6,7 +6,7 @@ touch /var/log/cron.log
 
 echo "SHELL=/bin/bash
 BASH_ENV=/container.env
-* 3 * * * /usr/local/bin/node /app/dist/index.js >> /var/log/cron.log 2>&1
+0 3 * * * /usr/local/bin/node /app/dist/index.js >> /var/log/cron.log 2>&1
 " > domain_record_cron
 
 crontab domain_record_cron
