@@ -15,7 +15,7 @@ const getCurrentDomainRecord = async ({recordId, domain, authToken}: IGetCurrent
 
     return domain_record.data;
   } catch (error) {
-    console.error(error);
+    console.error(`${new Date()} - error`);
   }
 };
 
@@ -36,7 +36,7 @@ const updateDomainRecordIp = async ({recordId, newIp, domain, authToken}: IUpdat
       })
       .json();
   } catch (error) {
-    console.error(error);
+    console.error(`${new Date()} - error`);
   }
 };
 
@@ -47,7 +47,7 @@ const getCurrentIp = async () => {
 
     return ip;
   } catch (error) {
-    console.error(error);
+    console.error(`${new Date()} - error`);
   }
 };
 
@@ -59,10 +59,10 @@ export const start = async ({authToken, domain, recordIds}: IUpdateConfig) => {
       const domainRecordIp = await getCurrentDomainRecord({recordId, domain, authToken});
 
       if (currentIp && domainRecordIp && currentIp !== domainRecordIp) {
-        console.info(`IP has changed, updating recordId: ${recordId}. Old ip: ${domainRecordIp}, new ip: ${currentIp}`);
+        console.info(`${new Date()} - IP has changed, updating recordId: ${recordId}. Old ip: ${domainRecordIp}, new ip: ${currentIp}`);
         updateDomainRecordIp({recordId, domain, authToken, newIp: currentIp});
       } else {
-        console.info('IP has not changed');
+        console.info(`${new Date()} - IP has not changed`);
       }
     }
   }

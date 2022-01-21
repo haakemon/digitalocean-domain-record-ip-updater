@@ -9,7 +9,7 @@ const readSecret = async (filePath?: string) => {
     const res = await readFile(filePath, {encoding: 'utf8'});
     return res.trim();
   } catch (error) {
-    console.error(error);
+    console.error(`${new Date()} - error`);
   }
 };
 
