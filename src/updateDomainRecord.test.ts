@@ -1,8 +1,8 @@
 import {rest} from 'msw';
 import {setupServer} from 'msw/node';
 
-import {start} from '../updateDomainRecord';
-import type {IDomainRecord} from '../types';
+import {start} from './updateDomainRecord';
+import type {IDomainRecord} from './types';
 
 const handlers = [
   rest.get('https://ifconfig.me/ip', (req, res, ctx) => {
@@ -56,7 +56,7 @@ test('updateDomainRecord should log info when ip is updated', async () => {
   expect(console.error).not.toHaveBeenCalled();
   expect(console.info).toHaveBeenCalledTimes(1);
   expect(console.info).toHaveBeenCalledWith(
-    `IP has changed, updating recordId: ${recordIds[0]}. Old ip: ${oldIp}, new ip: ${newIp}`
+    expect.stringContaining(`IP has changed, updating recordId: ${recordIds[0]}. Old ip: ${oldIp}, new ip: ${newIp}`)
   );
 });
 
@@ -76,10 +76,10 @@ test('updateDomainRecord should log info when ip is updated, and there are multi
   expect(console.error).not.toHaveBeenCalled();
   expect(console.info).toHaveBeenCalledTimes(2);
   expect(console.info).toHaveBeenCalledWith(
-    `IP has changed, updating recordId: ${recordIds[0]}. Old ip: ${oldIp}, new ip: ${newIp}`
+    expect.stringContaining(`IP has changed, updating recordId: ${recordIds[0]}. Old ip: ${oldIp}, new ip: ${newIp}`)
   );
   expect(console.info).toHaveBeenCalledWith(
-    `IP has changed, updating recordId: ${recordIds[1]}. Old ip: ${oldIp}, new ip: ${newIp}`
+    expect.stringContaining(`IP has changed, updating recordId: ${recordIds[1]}. Old ip: ${oldIp}, new ip: ${newIp}`)
   );
 });
 
@@ -100,5 +100,5 @@ test('updateDomainRecord should log info when ip is not updated', async () => {
   await start({authToken, domain, recordIds});
 
   expect(console.error).not.toHaveBeenCalled();
-  expect(console.info).toHaveBeenCalledWith(`IP has not changed`);
+  expect(console.info).toHaveBeenCalledWith(expect.stringContaining(`IP has not changed`));
 });

@@ -1,4 +1,4 @@
-import {getVariables} from '../variableUtils';
+import {getVariables} from './variableUtils';
 import path from 'node:path';
 
 test('getVariables should log an error when any variable are not set', async () => {
@@ -46,7 +46,7 @@ test('getVariables should return content from file when using env variables that
   process.env.DOMAIN = domain;
   process.env.RECORD_IDS = recordIds;
 
-  process.env.AUTH_TOKEN_FILE = path.join(__dirname, 'secret-test');
+  process.env.AUTH_TOKEN_FILE = path.join(__dirname, '__test__', 'secret-test');
 
   const result = await getVariables();
 
