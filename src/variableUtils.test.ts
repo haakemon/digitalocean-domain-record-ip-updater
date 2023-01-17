@@ -1,8 +1,25 @@
-import {getVariables} from './variableUtils';
-import path from 'node:path';
+import test from 'ava';
+import sinon from 'sinon';
 
-test('getVariables should log an error when any variable are not set', async () => {
-  console.error = jest.fn();
+import {getVariables} from './variableUtils.js';
+import path, {dirname} from 'node:path';
+import {logger} from './logger.js';
+
+import {fileURLToPath} from 'node:url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+let sandbox: any, errorLogger: any, infoLogger: any;
+
+test.beforeEach(() => {
+  sandbox = sinon.createSandbox();
+  errorLogger = sandbox.stub(logger, 'error');
+  infoLogger = sandbox.stub(logger, 'info');
+});
+test.afterEach(() => {
+  sandbox.restore();
+});
+
+test('getVariables should log an error when any variable are not set', async (t) => {
   const authToken = 'some-auth-token';
   const domain = 'example.com';
 
@@ -11,15 +28,15 @@ test('getVariables should log an error when any variable are not set', async () 
 
   const result = await getVariables();
 
-  expect(result).toEqual({
+  t.deepEqual(result, {
     authToken: authToken,
     domain: domain,
     recordIds: undefined,
   });
-  expect(console.error).toHaveBeenCalledTimes(1);
+  t.true(errorLogger.calledOnce);
 });
 
-test('getVariables should return variables when set in env variables', async () => {
+test('getVariables should return variables when set in env variables', async (t) => {
   const authToken = 'some-auth-token';
   const domain = 'example.com';
   const recordIds = '123,456';
@@ -30,14 +47,15 @@ test('getVariables should return variables when set in env variables', async () 
 
   const result = await getVariables();
 
-  expect(result).toEqual({
+  t.deepEqual(result, {
     authToken,
     domain,
     recordIds: ['123', '456'],
   });
+  t.false(errorLogger.calledOnce);
 });
 
-test('getVariables should return content from file when using env variables that end with _FILE', async () => {
+test('getVariables should return content from file when using env variables that end with _FILE', async (t) => {
   const authToken = 'some-auth-token';
   const domain = 'example.com';
   const recordIds = '123,456';
@@ -50,9 +68,10 @@ test('getVariables should return content from file when using env variables that
 
   const result = await getVariables();
 
-  expect(result).toEqual({
+  t.deepEqual(result, {
     authToken: 'auth-token-secret',
     domain,
     recordIds: ['123', '456'],
   });
+  t.false(errorLogger.calledOnce);
 });

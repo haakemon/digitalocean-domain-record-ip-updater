@@ -1,5 +1,6 @@
 import {promises as fs} from 'node:fs';
 const {readFile} = fs;
+import {logger} from './logger.js';
 
 const readSecret = async (filePath?: string) => {
   if (!filePath) {
@@ -9,7 +10,7 @@ const readSecret = async (filePath?: string) => {
     const res = await readFile(filePath, {encoding: 'utf8'});
     return res.trim();
   } catch (error) {
-    console.error(`${new Date()} - error`);
+    logger.error(`${new Date()} - error`);
   }
 };
 
@@ -21,7 +22,7 @@ export const getVariables = async () => {
   const hasAllVariablesSet = Boolean(authToken) && Boolean(domain) && Boolean(recordIds);
 
   if (!hasAllVariablesSet) {
-    console.error(`
+    logger.error(`
 - AUTH_TOKEN is required, go to https://cloud.digitalocean.com/account/api to set one up. Read and Write access is required.
 - DOMAIN is required.
 - RECORD_IDS should be a comma separated list of record id's to update.
