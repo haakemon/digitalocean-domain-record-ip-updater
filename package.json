@@ -1,7 +1,7 @@
 {
   "name": "digitalocean-domain-record-ip-updater",
   "version": "0.0.1",
-  "packageManager": "yarn@3.3.0",
+  "packageManager": "yarn@3.3.1",
   "private": true,
   "type": "module",
   "scripts": {
