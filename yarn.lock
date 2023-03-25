@@ -1073,8 +1073,8 @@ __metadata:
     "@types/sinon": 10.0.13
     ava: 5.2.0
     got: 12.6.0
-    msw: 1.1.0
-    prettier: 2.8.4
+    msw: 1.2.0
+    prettier: 2.8.6
     sinon: 15.0.2
     ts-node: 10.9.1
     typescript: 4.9.5
@@ -2345,9 +2345,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msw@npm:1.1.0":
-  version: 1.1.0
-  resolution: "msw@npm:1.1.0"
+"msw@npm:1.2.0":
+  version: 1.2.0
+  resolution: "msw@npm:1.2.0"
   dependencies:
     "@mswjs/cookies": ^0.2.2
     "@mswjs/interceptors": ^0.17.5
@@ -2369,13 +2369,13 @@ __metadata:
     type-fest: ^2.19.0
     yargs: ^17.3.1
   peerDependencies:
-    typescript: ">= 4.4.x <= 4.9.x"
+    typescript: ">= 4.4.x <= 5.0.x"
   peerDependenciesMeta:
     typescript:
       optional: true
   bin:
     msw: cli/index.js
-  checksum: e555547defbc3f07532bdadcbf9f4e3a32b92156d3869e85c9038ecaac220cfc93901727da097b7f9d3ecf9cbbc5a9178c0ecdd3999a9201db4c85c99b92c361
+  checksum: 2cea7fe0f2ebb59b11534896cbaa91dca65f4fb2272402549079cc4190847fc42f5367f331c552d576d59a3521f498da0384d53cf4960beaebd6165bbc44593b
   languageName: node
   linkType: hard
 
@@ -2695,12 +2695,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:2.8.4":
-  version: 2.8.4
-  resolution: "prettier@npm:2.8.4"
+"prettier@npm:2.8.6":
+  version: 2.8.6
+  resolution: "prettier@npm:2.8.6"
   bin:
     prettier: bin-prettier.js
-  checksum: c173064bf3df57b6d93d19aa98753b9b9dd7657212e33b41ada8e2e9f9884066bb9ca0b4005b89b3ab137efffdf8fbe0b462785aba20364798ff4303aadda57e
+  checksum: 8ac94fa67aec0e65743ea15ebf954ef2f1e52638abd129dc04e8b49e8bb3224c0233c98df6b5c98efd31bd2a43866590486559438ee4ead09dc81be389068572
   languageName: node
   linkType: hard
 
