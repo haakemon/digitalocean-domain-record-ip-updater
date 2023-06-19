@@ -9,7 +9,7 @@
     "test": "ava --serial"
   },
   "dependencies": {
-    "got": "12.6.1"
+    "got": "13.0.0"
   },
   "devDependencies": {
     "@types/sinon": "10.0.15",
