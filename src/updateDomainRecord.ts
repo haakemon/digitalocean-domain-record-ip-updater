@@ -16,7 +16,7 @@ const getCurrentDomainRecord = async ({recordId, domain, authToken}: IGetCurrent
 
     return domain_record.data;
   } catch (error) {
-    logger.error(`${new Date()} - error`);
+    logger.error(`${new Date()} - ${error}`);
   }
   return;
 };
@@ -38,7 +38,7 @@ const updateDomainRecordIp = async ({recordId, newIp, domain, authToken}: IUpdat
       })
       .json();
   } catch (error) {
-    logger.error(`${new Date()} - error`);
+    logger.error(`${new Date()} - ${error}`);
   }
 };
 
@@ -49,7 +49,7 @@ const getCurrentIp = async () => {
 
     return ip;
   } catch (error) {
-    logger.error(`${new Date()} - error`);
+    logger.error(`${new Date()} - ${error}`);
   }
   return;
 };
