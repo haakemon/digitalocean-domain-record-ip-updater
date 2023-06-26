@@ -20,5 +20,6 @@
     "outDir": "dist",
     "skipLibCheck": true,
     "verbatimModuleSyntax": true
-  }
+  },
+  "exclude": ["dist", "./ava.config.js"]
 }
