@@ -5,13 +5,13 @@ import sinon from 'sinon';
 import {logger} from './logger.js';
 
 import {start} from './updateDomainRecord.js';
-import type {IDomainRecord} from './types';
+import type {IDomainRecord} from './types.js';
 
 const handlers = [
-  rest.get('https://ifconfig.me/ip', (req, res, ctx) => {
+  rest.get('https://ifconfig.me/ip', (_req, res, ctx) => {
     return res(ctx.text('127.0.0.1'));
   }),
-  rest.get('https://api.digitalocean.com/v2/domains/example.com/records/:recordId', (req, res, ctx) => {
+  rest.get('https://api.digitalocean.com/v2/domains/example.com/records/:recordId', (_req, res, ctx) => {
     const mockApiResponse: IDomainRecord = {
       domain_record: {
         id: 123456,
@@ -23,7 +23,7 @@ const handlers = [
     };
     return res(ctx.json(mockApiResponse));
   }),
-  rest.put('https://api.digitalocean.com/v2/domains/example.com/records/:recordId', (req, res, ctx) => {
+  rest.put('https://api.digitalocean.com/v2/domains/example.com/records/:recordId', (_req, res, ctx) => {
     const mockApiResponse: IDomainRecord = {
       domain_record: {
         id: 123456,
@@ -93,7 +93,7 @@ test('updateDomainRecord should log info when ip is updated, and there are multi
 
 test('updateDomainRecord should log info when ip is not updated', async (t) => {
   server.use(
-    rest.get('https://ifconfig.me/ip', (req, res, ctx) => {
+    rest.get('https://ifconfig.me/ip', (_req, res, ctx) => {
       return res(ctx.text('192.168.0.1'));
     })
   );

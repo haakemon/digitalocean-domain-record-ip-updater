@@ -12,12 +12,13 @@ const readSecret = async (filePath?: string) => {
   } catch (error) {
     logger.error(`${new Date()} - error`);
   }
+  return;
 };
 
 export const getVariables = async () => {
-  const authToken = (await readSecret(process.env.AUTH_TOKEN_FILE)) || process.env.AUTH_TOKEN;
-  const domain = (await readSecret(process.env.DOMAIN_FILE)) || process.env.DOMAIN;
-  const recordIds = (await readSecret(process.env.RECORD_IDS_FILE)) || process.env.RECORD_IDS;
+  const authToken = (await readSecret(process.env['AUTH_TOKEN_FILE'])) || process.env['AUTH_TOKEN'];
+  const domain = (await readSecret(process.env['DOMAIN_FILE'])) || process.env['DOMAIN'];
+  const recordIds = (await readSecret(process.env['RECORD_IDS_FILE'])) || process.env['RECORD_IDS'];
 
   const hasAllVariablesSet = Boolean(authToken) && Boolean(domain) && Boolean(recordIds);
 

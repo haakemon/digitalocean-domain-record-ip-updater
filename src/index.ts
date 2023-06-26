@@ -1,5 +1,5 @@
-import {start} from './updateDomainRecord';
-import {getVariables} from './variableUtils';
+import {start} from './updateDomainRecord.js';
+import {getVariables} from './variableUtils.js';
 
 const init = async () => {
   const {authToken, domain, recordIds} = await getVariables();

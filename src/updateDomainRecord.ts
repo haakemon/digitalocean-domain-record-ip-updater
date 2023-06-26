@@ -1,5 +1,5 @@
 import got from 'got';
-import type {IUpdateConfig, IGetCurrentDomainRecord, IUpdateDomainRecord, IDomainRecord} from './types';
+import type {IUpdateConfig, IGetCurrentDomainRecord, IUpdateDomainRecord, IDomainRecord} from './types.js';
 import {logger} from './logger.js';
 
 const getCurrentDomainRecord = async ({recordId, domain, authToken}: IGetCurrentDomainRecord) => {
@@ -18,6 +18,7 @@ const getCurrentDomainRecord = async ({recordId, domain, authToken}: IGetCurrent
   } catch (error) {
     logger.error(`${new Date()} - error`);
   }
+  return;
 };
 
 const updateDomainRecordIp = async ({recordId, newIp, domain, authToken}: IUpdateDomainRecord) => {
@@ -50,6 +51,7 @@ const getCurrentIp = async () => {
   } catch (error) {
     logger.error(`${new Date()} - error`);
   }
+  return;
 };
 
 export const start = async ({authToken, domain, recordIds}: IUpdateConfig) => {

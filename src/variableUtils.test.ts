@@ -8,12 +8,12 @@ import {logger} from './logger.js';
 import {fileURLToPath} from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-let sandbox: any, errorLogger: any, infoLogger: any;
+let sandbox: any, errorLogger: any;
 
 test.beforeEach(() => {
   sandbox = sinon.createSandbox();
   errorLogger = sandbox.stub(logger, 'error');
-  infoLogger = sandbox.stub(logger, 'info');
+  sandbox.stub(logger, 'info');
 });
 test.afterEach(() => {
   sandbox.restore();
@@ -23,8 +23,8 @@ test('getVariables should log an error when any variable are not set', async (t)
   const authToken = 'some-auth-token';
   const domain = 'example.com';
 
-  process.env.AUTH_TOKEN = authToken;
-  process.env.DOMAIN = domain;
+  process.env['AUTH_TOKEN'] = authToken;
+  process.env['DOMAIN'] = domain;
 
   const result = await getVariables();
 
@@ -41,9 +41,9 @@ test('getVariables should return variables when set in env variables', async (t)
   const domain = 'example.com';
   const recordIds = '123,456';
 
-  process.env.AUTH_TOKEN = authToken;
-  process.env.DOMAIN = domain;
-  process.env.RECORD_IDS = recordIds;
+  process.env['AUTH_TOKEN'] = authToken;
+  process.env['DOMAIN'] = domain;
+  process.env['RECORD_IDS'] = recordIds;
 
   const result = await getVariables();
 
@@ -60,11 +60,11 @@ test('getVariables should return content from file when using env variables that
   const domain = 'example.com';
   const recordIds = '123,456';
 
-  process.env.AUTH_TOKEN = authToken;
-  process.env.DOMAIN = domain;
-  process.env.RECORD_IDS = recordIds;
+  process.env['AUTH_TOKEN'] = authToken;
+  process.env['DOMAIN'] = domain;
+  process.env['RECORD_IDS'] = recordIds;
 
-  process.env.AUTH_TOKEN_FILE = path.join(__dirname, '__test__', 'secret-test');
+  process.env['AUTH_TOKEN_FILE'] = path.join(__dirname, '__test__', 'secret-test');
 
   const result = await getVariables();
 
