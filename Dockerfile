@@ -5,10 +5,10 @@ RUN apt-get update && apt-get install cron tzdata -y
 
 WORKDIR /app
 COPY package.json .
-COPY yarn.lock .
+COPY pnpm-lock.yaml .
 COPY . .
-RUN yarn --immutable
-RUN yarn build
+RUN pnpm i
+RUN pnpm build
 
 RUN ["chmod", "+x", "/app/entrypoint.sh"]
 ENTRYPOINT [ "bash", "/app/entrypoint.sh" ]
