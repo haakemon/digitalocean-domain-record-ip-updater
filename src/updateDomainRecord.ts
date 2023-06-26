@@ -61,13 +61,17 @@ export const start = async ({authToken, domain, recordIds}: IUpdateConfig) => {
     for (const recordId of recordIds) {
       const domainRecordIp = await getCurrentDomainRecord({recordId, domain, authToken});
 
-      if (currentIp && domainRecordIp && currentIp !== domainRecordIp) {
-        logger.info(
-          `${new Date()} - IP has changed, updating recordId: ${recordId}. Old ip: ${domainRecordIp}, new ip: ${currentIp}`
-        );
-        updateDomainRecordIp({recordId, domain, authToken, newIp: currentIp});
+      if (currentIp && domainRecordIp) {
+        if (domainRecordIp && currentIp !== domainRecordIp) {
+          logger.info(
+            `${new Date()} - IP has changed, updating recordId: ${recordId}. Old ip: ${domainRecordIp}, new ip: ${currentIp}`
+          );
+          updateDomainRecordIp({recordId, domain, authToken, newIp: currentIp});
+        } else {
+          logger.info(`${new Date()} - IP has not changed`);
+        }
       } else {
-        logger.info(`${new Date()} - IP has not changed`);
+        logger.error(`${new Date()} - Could not get currentIP (${currentIp}) or domainRecordIP (${domainRecordIp})`);
       }
     }
   }
