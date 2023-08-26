@@ -1,5 +1,5 @@
 module.exports = {
-  trailingComma: 'es5',
+  trailingComma: 'all',
   tabWidth: 2,
   useTabs: false,
   semi: true,
@@ -8,7 +8,7 @@ module.exports = {
   quoteProps: 'as-needed',
   jsxSingleQuote: false,
   bracketSpacing: false,
-  jsxBracketSameLine: false,
+  bracketSameLine: true,
   arrowParens: 'always',
   endOfLine: 'lf',
 };

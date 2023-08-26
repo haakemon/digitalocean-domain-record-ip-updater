@@ -64,7 +64,7 @@ export const start = async ({authToken, domain, recordIds}: IUpdateConfig) => {
       if (currentIp && domainRecordIp) {
         if (domainRecordIp && currentIp !== domainRecordIp) {
           logger.info(
-            `${new Date()} - IP has changed, updating recordId: ${recordId}. Old ip: ${domainRecordIp}, new ip: ${currentIp}`
+            `${new Date()} - IP has changed, updating recordId: ${recordId}. Old ip: ${domainRecordIp}, new ip: ${currentIp}`,
           );
           updateDomainRecordIp({recordId, domain, authToken, newIp: currentIp});
         } else {

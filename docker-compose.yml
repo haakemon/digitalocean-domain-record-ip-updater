@@ -1,9 +1,8 @@
-version: "3.9"
+version: '3.9'
 
 secrets:
   digitalocean_read_write_token:
     file: ./docker-secrets/digitalocean_read_write_token
-
 
 services:
   digitalocean_update_ip:

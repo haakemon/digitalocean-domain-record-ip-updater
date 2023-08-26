@@ -67,7 +67,9 @@ test('updateDomainRecord should log info when ip is updated', async (t) => {
   t.false(errorLogger.calledOnce);
   t.true(infoLogger.calledOnce);
   t.true(
-    infoLogger.calledWithMatch(`IP has changed, updating recordId: ${recordIds[0]}. Old ip: ${oldIp}, new ip: ${newIp}`)
+    infoLogger.calledWithMatch(
+      `IP has changed, updating recordId: ${recordIds[0]}. Old ip: ${oldIp}, new ip: ${newIp}`,
+    ),
   );
 });
 
@@ -84,10 +86,14 @@ test('updateDomainRecord should log info when ip is updated, and there are multi
   t.false(errorLogger.calledOnce);
   t.true(infoLogger.calledTwice);
   t.true(
-    infoLogger.calledWithMatch(`IP has changed, updating recordId: ${recordIds[0]}. Old ip: ${oldIp}, new ip: ${newIp}`)
+    infoLogger.calledWithMatch(
+      `IP has changed, updating recordId: ${recordIds[0]}. Old ip: ${oldIp}, new ip: ${newIp}`,
+    ),
   );
   t.true(
-    infoLogger.calledWithMatch(`IP has changed, updating recordId: ${recordIds[1]}. Old ip: ${oldIp}, new ip: ${newIp}`)
+    infoLogger.calledWithMatch(
+      `IP has changed, updating recordId: ${recordIds[1]}. Old ip: ${oldIp}, new ip: ${newIp}`,
+    ),
   );
 });
 
@@ -95,7 +101,7 @@ test('updateDomainRecord should log info when ip is not updated', async (t) => {
   server.use(
     rest.get('https://ifconfig.me/ip', (_req, res, ctx) => {
       return res(ctx.text('192.168.0.1'));
-    })
+    }),
   );
 
   const authToken = 'asdfe3';
