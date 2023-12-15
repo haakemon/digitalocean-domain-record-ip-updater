@@ -5,7 +5,8 @@
   "scripts": {
     "build": "tsc",
     "prettier": "prettier ** --write",
-    "test": "node --import tsx --test src/**.test.ts"
+    "test": "node --import tsx --test src/**.test.ts",
+    "tsc": "tsc --noEmit"
   },
   "dependencies": {
     "got": "14.0.0"

@@ -8,7 +8,7 @@ COPY package.json .
 COPY pnpm-lock.yaml .
 COPY . .
 RUN pnpm i
-RUN pnpm build
+RUN pnpm run build
 
 RUN ["chmod", "+x", "/app/entrypoint.sh"]
 ENTRYPOINT [ "bash", "/app/entrypoint.sh" ]
