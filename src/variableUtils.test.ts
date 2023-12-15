@@ -1,11 +1,12 @@
-import test from 'ava';
+import { test } from "node:test"
+import assert from "node:assert"
+import {fileURLToPath} from 'node:url';
+
 import sinon from 'sinon';
 
 import {getVariables} from './variableUtils.js';
 import path, {dirname} from 'node:path';
 import {logger} from './logger.js';
-
-import {fileURLToPath} from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 let sandbox: any, errorLogger: any;
@@ -19,7 +20,7 @@ test.afterEach(() => {
   sandbox.restore();
 });
 
-test('getVariables should log an error when any variable are not set', async (t) => {
+test('getVariables should log an error when any variable are not set', async () => {
   const authToken = 'some-auth-token';
   const domain = 'example.com';
 
@@ -28,15 +29,15 @@ test('getVariables should log an error when any variable are not set', async (t)
 
   const result = await getVariables();
 
-  t.deepEqual(result, {
+  assert.deepStrictEqual(result, {
     authToken: authToken,
     domain: domain,
     recordIds: undefined,
   });
-  t.true(errorLogger.calledOnce);
+  assert.equal(errorLogger.calledOnce, true);
 });
 
-test('getVariables should return variables when set in env variables', async (t) => {
+test('getVariables should return variables when set in env variables', async () => {
   const authToken = 'some-auth-token';
   const domain = 'example.com';
   const recordIds = '123,456';
@@ -47,12 +48,12 @@ test('getVariables should return variables when set in env variables', async (t)
 
   const result = await getVariables();
 
-  t.deepEqual(result, {
+  assert.deepStrictEqual(result, {
     authToken,
     domain,
     recordIds: ['123', '456'],
   });
-  t.false(errorLogger.calledOnce);
+  assert.equal(errorLogger.calledOnce, false);
 });
 
 test('getVariables should return content from file when using env variables that end with _FILE', async (t) => {
@@ -68,10 +69,10 @@ test('getVariables should return content from file when using env variables that
 
   const result = await getVariables();
 
-  t.deepEqual(result, {
+  assert.deepStrictEqual(result, {
     authToken: 'auth-token-secret',
     domain,
     recordIds: ['123', '456'],
   });
-  t.false(errorLogger.calledOnce);
+  assert.equal(errorLogger.calledOnce, false);
 });

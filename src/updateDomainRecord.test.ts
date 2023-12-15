@@ -1,17 +1,24 @@
-import test from 'ava';
-import {rest} from 'msw';
-import {setupServer} from 'msw/node';
-import sinon from 'sinon';
-import {logger} from './logger.js';
+import { test } from "node:test"
+import assert from "node:assert"
 
+import sinon from 'sinon';
+
+import {logger} from './logger.js';
 import {start} from './updateDomainRecord.js';
 import type {IDomainRecord} from './types.js';
 
+import { http } from 'msw'
+import {setupServer} from 'msw/node';
+
 const handlers = [
-  rest.get('https://ifconfig.me/ip', (_req, res, ctx) => {
-    return res(ctx.text('127.0.0.1'));
+  http.get('https://ifconfig.me/ip', () => {
+    return new Response('127.0.0.1', {
+      headers: {
+        'Content-Type': 'text/plain'
+      }
+    });
   }),
-  rest.get('https://api.digitalocean.com/v2/domains/example.com/records/:recordId', (_req, res, ctx) => {
+  http.get('https://api.digitalocean.com/v2/domains/example.com/records/:recordId', () => {
     const mockApiResponse: IDomainRecord = {
       domain_record: {
         id: 123456,
@@ -21,9 +28,13 @@ const handlers = [
         ttl: 3600,
       },
     };
-    return res(ctx.json(mockApiResponse));
+    return new Response(JSON.stringify(mockApiResponse), {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
   }),
-  rest.put('https://api.digitalocean.com/v2/domains/example.com/records/:recordId', (_req, res, ctx) => {
+  http.put('https://api.digitalocean.com/v2/domains/example.com/records/:recordId', () => {
     const mockApiResponse: IDomainRecord = {
       domain_record: {
         id: 123456,
@@ -33,7 +44,11 @@ const handlers = [
         ttl: 3600,
       },
     };
-    return res(ctx.json(mockApiResponse));
+    return new Response(JSON.stringify(mockApiResponse), {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
   }),
 ];
 
@@ -54,7 +69,7 @@ test.afterEach(() => {
 });
 test.after(() => server.close());
 
-test('updateDomainRecord should log info when ip is updated', async (t) => {
+test('updateDomainRecord should log info when ip is updated', async () => {
   const authToken = 'asdfe3';
   const domain = 'example.com';
   const recordIds = ['123456'];
@@ -64,16 +79,16 @@ test('updateDomainRecord should log info when ip is updated', async (t) => {
   const oldIp = '192.168.0.1';
   const newIp = '127.0.0.1';
 
-  t.false(errorLogger.calledOnce);
-  t.true(infoLogger.calledOnce);
-  t.true(
+  assert.equal(errorLogger.calledOnce, false);
+  assert.equal(infoLogger.calledOnce, true);
+  assert.equal(
     infoLogger.calledWithMatch(
       `IP has changed, updating recordId: ${recordIds[0]}. Old ip: ${oldIp}, new ip: ${newIp}`,
-    ),
+    ), true
   );
 });
 
-test('updateDomainRecord should log info when ip is updated, and there are multiple recordIds', async (t) => {
+test('updateDomainRecord should log info when ip is updated, and there are multiple recordIds', async () => {
   const authToken = 'asdfe3';
   const domain = 'example.com';
   const recordIds = ['123456', '987654321'];
@@ -83,24 +98,28 @@ test('updateDomainRecord should log info when ip is updated, and there are multi
   const oldIp = '192.168.0.1';
   const newIp = '127.0.0.1';
 
-  t.false(errorLogger.calledOnce);
-  t.true(infoLogger.calledTwice);
-  t.true(
+  assert.equal(errorLogger.calledOnce, false);
+  assert.equal(infoLogger.calledTwice, true);
+  assert.equal(
     infoLogger.calledWithMatch(
       `IP has changed, updating recordId: ${recordIds[0]}. Old ip: ${oldIp}, new ip: ${newIp}`,
-    ),
+    ), true
   );
-  t.true(
+  assert.equal(
     infoLogger.calledWithMatch(
       `IP has changed, updating recordId: ${recordIds[1]}. Old ip: ${oldIp}, new ip: ${newIp}`,
-    ),
+    ), true
   );
 });
 
-test('updateDomainRecord should log info when ip is not updated', async (t) => {
+test('updateDomainRecord should log info when ip is not updated', async () => {
   server.use(
-    rest.get('https://ifconfig.me/ip', (_req, res, ctx) => {
-      return res(ctx.text('192.168.0.1'));
+    http.get('https://ifconfig.me/ip', () => {
+      return new Response('192.168.0.1', {
+        headers: {
+          'Content-Type': 'text/plain'
+        }
+      });
     }),
   );
 
@@ -110,7 +129,7 @@ test('updateDomainRecord should log info when ip is not updated', async (t) => {
 
   await start({authToken, domain, recordIds});
 
-  t.false(errorLogger.calledOnce);
-  t.true(infoLogger.calledOnce);
-  t.true(infoLogger.calledWithMatch(`IP has not changed`));
+  assert.equal(errorLogger.calledOnce, false);
+  assert.equal(infoLogger.calledOnce, true);
+  assert.equal(infoLogger.calledWithMatch(`IP has not changed`), true);
 });
