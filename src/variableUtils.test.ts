@@ -56,7 +56,7 @@ test('getVariables should return variables when set in env variables', async () 
   assert.equal(errorLogger.calledOnce, false);
 });
 
-test('getVariables should return content from file when using env variables that end with _FILE', async (t) => {
+test('getVariables should return content from file when using env variables that end with _FILE', async () => {
   const authToken = 'some-auth-token';
   const domain = 'example.com';
   const recordIds = '123,456';
