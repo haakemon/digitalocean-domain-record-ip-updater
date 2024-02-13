@@ -9,15 +9,15 @@
     "tsc": "tsc --noEmit"
   },
   "dependencies": {
-    "got": "14.1.0"
+    "got": "14.2.0"
   },
   "devDependencies": {
     "@types/sinon": "17.0.3",
-    "msw": "2.1.5",
-    "prettier": "3.2.4",
+    "msw": "2.1.7",
+    "prettier": "3.2.5",
     "sinon": "17.0.1",
     "ts-node": "10.9.2",
-    "tsx": "4.7.0",
+    "tsx": "4.7.1",
     "typescript": "5.3.3"
   },
   "engines": {
