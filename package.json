@@ -9,7 +9,7 @@
     "tsc": "tsc --noEmit"
   },
   "dependencies": {
-    "got": "14.2.0"
+    "got": "14.2.1"
   },
   "devDependencies": {
     "@types/sinon": "17.0.3",
@@ -18,7 +18,7 @@
     "sinon": "17.0.1",
     "ts-node": "10.9.2",
     "tsx": "4.7.1",
-    "typescript": "5.3.3"
+    "typescript": "5.4.2"
   },
   "engines": {
     "node": ">=20.10.0 <21.0.0",
