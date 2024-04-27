@@ -1,4 +1,4 @@
-FROM node:20.12.2-bullseye-slim@sha256:f8c4cf58c27830c78d6e2b351e55cad65f5e388b892e76eac068a64bf6ba1caf
+FROM node:20.12.2-bullseye-slim@sha256:9f551d0de76e31b2a47ff1c99501c10b9c1277dd55700fe17465718238f2f682
 
 RUN corepack enable
 RUN apt-get update && apt-get install cron tzdata -y
