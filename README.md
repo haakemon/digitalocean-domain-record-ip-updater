@@ -1,5 +1,8 @@
 # digitalocean-domain-record-ip-updater
 
+> [!NOTE]
+> I no longer use DigitalOcean as my DNS, so I will no longer maintain this repository.
+
 A simple utility to automatically update the IP address of a domain record when it changes. This is useful f.ex when running a home server that uses a domain, and you have a dynamic IP address.
 
 A cron job is running every night at 0300, that checks the current IP, and compares with records set in your DigitalOcean config. If the current IP does not match the IP of the domain record, it will execute a PUT request to update it. To achieve this, both read and write access is required to DigitalOcean. This is set up with an API key.
